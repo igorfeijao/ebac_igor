@@ -1,0 +1,429 @@
+{
+	"info": {
+		"_postman_id": "a04e4340-d0e0-49bf-bcdc-deb9c90ce3a8",
+		"name": "Exercício ServeRest - Igor Brelaz",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Cadastro",
+			"item": [
+				{
+					"name": "Cadastro realizado com sucesso",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Cadastrado realizado\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Marcus Borges\",\n  \"email\": \"marcusb@teste.com.br\",\n  \"password\": \"marbo123789\",\n  \"administrador\": \"true\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{teste}}usuarios",
+							"host": [
+								"{{teste}}usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cadastro com e-mail já utilizado",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Cadastro não realizado\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"E-mail já cadastrado\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Este email já está sendo usado\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Joana Lopes\",\n  \"email\": \"jodark@teste.com.br\",\n  \"password\": \"jolo456912\",\n  \"administrador\": \"true\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{teste}}usuarios",
+							"host": [
+								"{{teste}}usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cadastro com Formato de E-mail errado",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Cadastro não realizado\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Campo do e-mail com formato errado\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"email deve ser um email válido\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Janice Araujo\",\n  \"email\": \"janice@teste.\",\n  \"password\": \"jan456198\",\n  \"administrador\": \"true\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{teste}}usuarios",
+							"host": [
+								"{{teste}}usuarios"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Editar",
+			"item": [
+				{
+					"name": "Editar usuário cadastrado com sucesso",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Alteração realizada\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Alteração no cadastrado realizada com sucesso\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Registro alterado com sucesso\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Marina da Silva Oliveira\",\n    \"email\": \"marinasilva@teste.com.br\",\n    \"password\": \"mar456123\",\n    \"administrador\": \"true\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{teste}}usuarios/3MtgIlbpvmBTe297",
+							"host": [
+								"{{teste}}usuarios"
+							],
+							"path": [
+								"3MtgIlbpvmBTe297"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar usuário com e-mail já cadastrado",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Alteração não realizada\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Email já cadastrado\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Este email já está sendo usado\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Marina da Silva Oliveira\",\n    \"email\": \"iaraujo_qa@ebac.com.br\",\n    \"password\": \"mar456123\",\n    \"administrador\": \"true\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{teste}}usuarios/3MtgIlbpvmBTe297",
+							"host": [
+								"{{teste}}usuarios"
+							],
+							"path": [
+								"3MtgIlbpvmBTe297"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar usuário não existente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Usuário criado\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Usuário criado por não ter ID existente\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Cadastro realizado com sucesso\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nome\": \"Luiza Diniz\",\n    \"email\": \"ludiniz@teste.com\",\n    \"password\": \"lu456987\",\n    \"administrador\": \"true\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{teste}}usuarios/e1YtQ472hL87XKPi",
+							"host": [
+								"{{teste}}usuarios"
+							],
+							"path": [
+								"e1YtQ472hL87XKPi"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cadastro por ID",
+			"item": [
+				{
+					"name": "Buscar cadastro por ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Usuário encontrado\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Usuário encontrado pela ID\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"nome\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{teste}}usuarios/YDCZQcfU6hkHPPxV",
+							"host": [
+								"{{teste}}usuarios"
+							],
+							"path": [
+								"YDCZQcfU6hkHPPxV"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar cadastro por ID inexistente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Usuário não encontrado\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"ID buscada não existe\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Usuário não encontrado\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{teste}}usuarios/YDCZQcfU6hfGPPxV",
+							"host": [
+								"{{teste}}usuarios"
+							],
+							"path": [
+								"YDCZQcfU6hfGPPxV"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Deletar",
+			"item": [
+				{
+					"name": "Excluir usuário por ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Exclusão com sucesso\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Usuário excluído com sucesso\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Registro excluído com sucesso\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{teste}}usuarios/0uxuPY0cbmQhpEz1",
+							"host": [
+								"{{teste}}usuarios"
+							],
+							"path": [
+								"0uxuPY0cbmQhpEz1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Excluir usuário por ID inexistente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Não deletado\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"ID não encontrado para ser deletado\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Nenhum registro excluído\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{teste}}usuarios/e1YtQ488hL87XKPi",
+							"host": [
+								"{{teste}}usuarios"
+							],
+							"path": [
+								"e1YtQ488hL87XKPi"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Listar usuários cadastrados",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/usuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
